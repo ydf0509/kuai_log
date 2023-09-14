@@ -6,11 +6,11 @@ print(filepath)
 
 setup(
     name='kuai_log',  #
-    version="0.4",
+    version="0.6",
     description=(
         "kuai_log is most fast python log"
     ),
-    keywords=['logging','log','logger','loguru','nb_log','rotate file'],
+    keywords=['logging', 'log', 'logger', 'loguru', 'nb_log', 'rotate file'],
     # long_description=open('README.md', 'r',encoding='utf8').read(),
     long_description_content_type="text/markdown",
     long_description=open(filepath, 'r', encoding='utf8').read(),
@@ -40,14 +40,14 @@ setup(
         'Programming Language :: Python :: 3.12',
         'Topic :: Software Development :: Libraries'
     ],
-    install_requires=['tzlocal']
+    install_requires=['tzlocal', ]
 )
 """
 打包上传
 python setup.py sdist upload -r pypi
 
 
-python setup.py sdist & python -m twine upload dist/kuai_log-0.4.tar.gz
+python setup.py sdist & python -m twine upload dist/kuai_log-0.6.tar.gz
 
 
 python -m pip install kuai_log --upgrade -i https://pypi.org/simple

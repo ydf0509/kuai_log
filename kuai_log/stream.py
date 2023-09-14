@@ -6,6 +6,19 @@ import threading
 import time
 import atexit
 
+from kuai_log._datetime import aware_now
+
+
+class Stream:
+    @classmethod
+    def stdout(cls, msg):
+        print(msg)
+
+    @classmethod
+    def print(cls, *args, sep=' ', end='\n', file=None, flush=True, sys_getframe_n=2):
+        args = (str(arg) for arg in args)  # REMIND 防止是数字不能被join
+        msg = sep.join(args) + end
+        print(msg)
 
 class BulkStream:
     q = queue.SimpleQueue()
@@ -29,15 +42,14 @@ class BulkStream:
     @classmethod
     def print(cls, *args, sep=' ', end='\n', file=None, flush=True, sys_getframe_n=2):
         args = (str(arg) for arg in args)  # REMIND 防止是数字不能被join
-        args_str = sep.join(args) + end
-        msg = args_str
+        msg = sep.join(args) + end
         fra = sys._getframe(1)  # noqa
         line = fra.f_lineno
         full_path = fra.f_code.co_filename  # type :str
         # file_name = full_path.split('/')[-1].split('\\')[-1]
         full_path_and_line = f'"{full_path}:{line}"'
         fun = fra.f_code.co_name
-        full_msg = f'{time.strftime("%Y-%m-%d %H:%M:%S %z")} - {full_path_and_line} - {fun} - [print] - {msg}'
+        full_msg = f'{aware_now()} - {full_path_and_line} - {fun} - [print] - {msg}'
         color_msg = f'\033[0;34m{full_msg}\033[0m'
         with cls._lock:
             cls.q.put(color_msg)
@@ -87,8 +99,11 @@ class BulkStream:
             __builtins__['print'] = cls.print
         # traceback.print_exception = print_exception  # file类型为 <_io.StringIO object at 0x00000264F2F065E8> 单独判断，解决了，不要加这个。
 
+OsStream = Stream
+
 
 if os.name == 'nt':  # windows io性能差
+    OsStream = BulkStream
     BulkStream.start_bulk_stdout()
     BulkStream.patch_print()
     atexit.register(BulkStream._when_exit)

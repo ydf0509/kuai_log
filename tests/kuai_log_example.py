@@ -6,7 +6,7 @@ import time
 
 from kuai_log import get_logger
 
-logger = get_logger(name='test', level=logging.DEBUG, log_filename='t5.log',
+logger = get_logger(name='test_example', level=logging.DEBUG, log_filename='kuailog_ex.log',
                     log_path='/pythonlogs', is_add_file_handler=True,
                     json_log_path='/python_logs_json', is_add_json_file_handler=True,
                     )

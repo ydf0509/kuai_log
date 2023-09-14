@@ -2,7 +2,7 @@ import json
 import typing
 import copy
 import datetime
-from tzlocal import get_localzone
+# from tzlocal import get_localzone
 import os
 import socket
 import sys
@@ -10,7 +10,9 @@ import threading
 import traceback
 from enum import Enum
 import logging
-from kuai_log.bulk_stream import BulkStream
+
+from kuai_log._datetime import aware_now
+from kuai_log.stream import OsStream
 from kuai_log.rotate_file_writter import OsFileWritter
 
 
@@ -42,7 +44,7 @@ class KuaiLogger:
     """
 
     # 获取当前时区
-    current_timezone = get_localzone().zone
+    # current_timezone = get_localzone().zone
     host = socket.gethostname()
 
     def __init__(self, name, level=logging.DEBUG,
@@ -116,8 +118,9 @@ class KuaiLogger:
         if f'{FormatterFieldEnum.thread.value}' in self._need_fields:
             format_kwargs[FormatterFieldEnum.thread.value] = threading.get_ident()
         if FormatterFieldEnum.asctime.value in self._need_fields:
-            format_kwargs[FormatterFieldEnum.asctime.value] = datetime.datetime.now().strftime(
-                f"%Y-%m-%d %H:%M:%S.%f {self.current_timezone}")
+            # format_kwargs[FormatterFieldEnum.asctime.value] = datetime.datetime.now().strftime(
+            #     f"%Y-%m-%d %H:%M:%S.%f {self.current_timezone}")
+            format_kwargs[FormatterFieldEnum.asctime.value] = aware_now()
         if FormatterFieldEnum.host.value in self._need_fields:
             format_kwargs[FormatterFieldEnum.host.value] = self.host
         return format_kwargs
@@ -151,7 +154,7 @@ class KuaiLogger:
         # print(msg_format)
         # print(msg)
         if self._is_add_stream_handler:
-            BulkStream.stdout(msg_color)
+            OsStream.stdout(msg_color)
         if self._is_add_file_handler:
             self._fw.write_2_file(msg_format)
         if self._is_add_json_file_handler:
