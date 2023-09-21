@@ -23,10 +23,9 @@ def f():
 
 
 f()
-<<<<<<< HEAD
+
 print(time.time() -t1)
-=======
 
 
 time.sleep(100)
->>>>>>> 2d213431b57ef35fa725b9c0bb58e07fbd533fc2
+
