@@ -10,7 +10,7 @@ import threading
 import traceback
 from enum import Enum
 import logging
-
+from functools import partial
 from kuai_log._datetime import aware_now
 from kuai_log.stream import OsStream
 from kuai_log.rotate_file_writter import OsFileWritter
@@ -125,7 +125,7 @@ class KuaiLogger:
             format_kwargs[FormatterFieldEnum.host.value] = self.host
         return format_kwargs
 
-    def _log(self, level, msg, args=None, exc_info=None, extra=None, stack_info=False, stacklevel=3):
+    def log(self, level, msg, args=None, exc_info=None, extra=None, stack_info=False, stacklevel=3):
         # def _log(self, level, msg, args, exc_info=None, extra=None, stack_info=False):
 
         if self.level > level:
@@ -183,22 +183,22 @@ class KuaiLogger:
         return msg_color
 
     def debug(self, msg, *args, **kwargs):
-        self._log(logging.DEBUG, msg, *args, **kwargs)
+        self.log(logging.DEBUG, msg, *args, **kwargs)
 
     def info(self, msg, *args, **kwargs):
-        self._log(logging.INFO, msg, *args, **kwargs)
+        self.log(logging.INFO, msg, *args, **kwargs)
 
     def warning(self, msg, *args, **kwargs):
-        self._log(logging.WARNING, msg, *args, **kwargs)
+        self.log(logging.WARNING, msg, *args, **kwargs)
 
     def error(self, msg, *args, **kwargs):
-        self._log(logging.ERROR, msg, *args, **kwargs)
+        self.log(logging.ERROR, msg, *args, **kwargs)
 
     def exception(self, msg, *args, **kwargs):
-        self._log(logging.ERROR, msg, *args, **kwargs, exc_info=True)
+        self.log(logging.ERROR, msg, *args, **kwargs, exc_info=True)
 
     def critical(self, msg, *args, **kwargs):
-        self._log(logging.CRITICAL, msg, *args, **kwargs)
+        self.log(logging.CRITICAL, msg, *args, **kwargs)
 
 
 # noinspection PyPep8
@@ -215,6 +215,11 @@ def get_logger(name, level=logging.DEBUG,
     else:
         logger = KuaiLogger(**local_params)
         logger_name__logger_obj_map[name] = logger
+    raw_logger = logging.getLogger(name)
+    raw_logger.setLevel(level)
+    raw_logger.handlers = []
+    raw_logger._log = logger.log # 这是对logging包的日志记录,转移到kuai_log来记录.
+    raw_logger.log = partial(logger.log, stacklevel=2)
     return logger
 
 
