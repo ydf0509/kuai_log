@@ -6,7 +6,7 @@ print(filepath)
 
 setup(
     name='kuai_log',  #
-    version="0.6",
+    version="0.7",
     description=(
         "kuai_log is most fast python log"
     ),
@@ -47,7 +47,7 @@ setup(
 python setup.py sdist upload -r pypi
 
 
-python setup.py sdist & python -m twine upload dist/kuai_log-0.6.tar.gz
+python setup.py sdist & python -m twine upload dist/kuai_log-0.7.tar.gz
 
 
 python -m pip install kuai_log --upgrade -i https://pypi.org/simple

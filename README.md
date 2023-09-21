@@ -10,13 +10,16 @@ kuai_log的文件日志多进程切割安全.
 
 kuai_log的文件日志支持更友好的json文件写入,更适合elk采集.(例如logger.info直接记录一个字典,会自动转换)
 
+kuai_log KuaiLogger 对象的方法名和入参在logging.Logger对象中一定存在,且参数相同,虽然不是基于logging开发,但保持了良好的兼容性
+
 ### 1.2 为什么用 kuai_log
 
 ```
-内置的logging功能十分丰富强大扩展性好,但很多人不懂他的丰富功能,所以平时也没用到那些功能. 
-例如logging 树形的命名空间name,用户都不知道
+用户怕了logging包的创建logger, 创建handler, handler设置formatter, logger添加handler 的方式,感觉logging复杂,导致用户想用loguru
 
-用户只是简单的使用,那就可以不需要logging包了
+loguru对logging包的不兼容和复杂.比如loguru记录flask框架的已有日志内容,就比较麻烦,说的是在已有logging命名空间添加handler,loguru困难.
+例如loguru记录flask werkzeug 请求记录的日志 ,记录 tornado.access的 日志,麻烦.
+
 ```
 
 ## 2 性能比较
