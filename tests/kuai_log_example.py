@@ -20,3 +20,5 @@ for i in range(1):
     logger.critical(i)
 
 print(time.time() - t_start)
+
+time.sleep(10000)
