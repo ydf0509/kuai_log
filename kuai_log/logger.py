@@ -156,11 +156,11 @@ class KuaiLogger:
         # print(msg_format)
         # print(msg)
         if self._is_add_stream_handler:
-            OsStream.stdout(msg_color)
+            OsStream.stdout(msg_color + '\n')
         if self._is_add_file_handler:
-            self._fw.write_2_file(msg_format)
+            self._fw.write_2_file(msg_format +'\n')
         if self._is_add_json_file_handler:
-            self._fw_json.write_2_file(json.dumps(format_kwargs_json, ensure_ascii=False))
+            self._fw_json.write_2_file(json.dumps(format_kwargs_json, ensure_ascii=False) + '\n')
 
     @staticmethod
     def _add_color(complete_msg, record_level):

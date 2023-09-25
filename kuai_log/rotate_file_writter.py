@@ -134,7 +134,7 @@ class BulkFileWritter:
             for _file_name, queue in cls.filename__queue_map.items():
                 msg_str_all = ''
                 while not queue.empty():
-                    msg_str_all += str(queue.get()) + '\n'
+                    msg_str_all += str(queue.get())
                 if msg_str_all:
                     cls._get_file_writter(_file_name).write_2_file(msg_str_all)
 

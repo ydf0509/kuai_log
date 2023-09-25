@@ -30,7 +30,7 @@ class BulkStream:
         with cls._lock:
             msg_str_all = ''
             while not cls.q.empty():
-                msg_str_all += str(cls.q.get()) + '\n'
+                msg_str_all += str(cls.q.get())
             if msg_str_all:
                 sys.stdout.write(msg_str_all)
 
