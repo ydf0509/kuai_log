@@ -111,5 +111,5 @@ nb_log是基于logging封装的,kuai_log是手写的.
 
 ## 6 kuai_log 日志截图
 
-![ackrX.png](https://img.vinua.cn/images/ackrX.png)
 
+![a9w0Q.png](https://img.vinua.cn/images/a9w0Q.png)
