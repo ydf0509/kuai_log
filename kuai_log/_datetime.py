@@ -1,5 +1,6 @@
 
 import re
+import sys
 from calendar import day_abbr, day_name, month_abbr, month_name
 from datetime import datetime as datetime_
 from datetime import timedelta, timezone
@@ -69,13 +70,11 @@ class datetime(datetime_):  # noqa: N801
             "X": "%d" % timestamp,
             "x": "%d" % (int(timestamp) * 1000000 + microsecond),
         }
-
         def get(m):
             try:
                 return rep[m.group(0)]
             except KeyError:
                 return m.group(0)[1:-1]
-
         return pattern.sub(get, spec)
 
 

@@ -1,4 +1,5 @@
 import json
+import time
 import typing
 import copy
 import datetime
@@ -137,6 +138,7 @@ class KuaiLogger:
         format_kwargs_json = {}
         if self._is_add_json_file_handler:
             format_kwargs_json = copy.copy(format_kwargs)
+            format_kwargs_json['asctime'] = str(format_kwargs_json['asctime'])
             format_kwargs_json['msg'] = {}
             if isinstance(msg, dict):
                 format_kwargs_json['msg'].update(msg)

@@ -5,8 +5,9 @@ from kuai_log import get_logger
 
 
 
-l1 = logging.getLogger('l1')
-
+l1 = logging.getLogger('l1.c')
+import tornado
+import fastapi
 print(logging.getLogger('l1') is l1)
 l1.info('xixi1')
 

@@ -11,8 +11,12 @@ import pysnooper_click_able
 @pysnooper_click_able.snoop(depth=10000)
 def f():
     for i in range(1):
+        # t = time.strftime('%Y-%m-%dT%H:%M:%S%z')
+        t = aware_now()
         if i %1000 == 0:
-            print(aware_now())
+            # print(aware_now())
+            print(t)
+
 
 
 f()
