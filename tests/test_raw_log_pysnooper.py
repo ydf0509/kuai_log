@@ -33,8 +33,9 @@ import pysnooper_click_able
 
 @pysnooper_click_able.snoop(depth=1000)
 def f():
-    for i in range(1):
-        logger_raw.error("日志现在格式变好了，并且记录到文件了")
+    import gevent
+    # for i in range(1):
+    #     logger_raw.error("日志现在格式变好了，并且记录到文件了")
         # logger.info(111)
         # logger.warning(111)
         # logger.error(111)

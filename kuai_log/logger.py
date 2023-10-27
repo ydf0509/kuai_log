@@ -131,7 +131,7 @@ class KuaiLogger:
 
         if self.level > level:
             return
-
+        msg = msg%args
         format_kwargs = self._build_format_kwargs(level, msg, stacklevel)
         # print(self._formatter_template)
         # print(format_kwargs)
